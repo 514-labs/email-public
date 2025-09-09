@@ -1,0 +1,19 @@
+.moose
+node_modules
+dist
+coverage
+.ts-node
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
+
+# IDE and AI assistant folders
+.vscode
+.claude
+
+# Blog post (not part of the project)
+blog.md
+

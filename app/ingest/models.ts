@@ -1,6 +1,5 @@
 import {
   IngestPipeline,
-  Key,
 } from "@514labs/moose-lib";
 
 /**
@@ -14,7 +13,7 @@ import {
 /** Clerk user.created webhook payload - exactly as received */
 export interface UserSignupEvent {
   data: {
-    id: Key<string>;               // Primary key - Clerk user ID
+    id: string;                    // Clerk user ID
     first_name: string | null;
     last_name: string | null;
     created_at: number;
@@ -46,9 +45,11 @@ export interface UserSignupEvent {
 
 /** =======Pipeline Configuration========= */
 
-/** User signup event ingestion - streaming only, no persistence */
+/** User signup event ingestion - streaming and persistence */
 export const UserSignupPipeline = new IngestPipeline<UserSignupEvent>("UserSignup", {
-  table: false, // No persistence needed
+  table: {
+    orderByFields: ["timestamp"],  // Order by timestamp
+  },
   stream: true, // Enable real-time processing
   ingest: true, // POST /ingest/UserSignup
   deadLetterQueue: true, // DLQ as topic (default)

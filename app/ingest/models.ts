@@ -46,9 +46,11 @@ export interface UserSignupEvent {
 
 /** =======Pipeline Configuration========= */
 
-/** User signup event ingestion - streaming only, no persistence */
+/** User signup event ingestion - streaming and persistence */
 export const UserSignupPipeline = new IngestPipeline<UserSignupEvent>("UserSignup", {
-  table: false, // No persistence needed
+  table: {
+    orderByFields: ["timestamp"], // ClickHouse ORDER BY timestamp
+  },
   stream: true, // Enable real-time processing
   ingest: true, // POST /ingest/UserSignup
   deadLetterQueue: true, // DLQ as topic (default)

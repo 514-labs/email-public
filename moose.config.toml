@@ -50,7 +50,7 @@ postgresql_version = "13"
 [supported_old_versions]
 
 [features]
-olap = false
+olap = true
 streaming_engine = true
 workflows = false
 data_model_v2 = true
